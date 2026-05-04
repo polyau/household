@@ -1,0 +1,1674 @@
+---
+title: Спецификация API
+sidebar_position: 9
+description: Спецификация API приложения.
+---
+<details>
+    <summary>Показать код</summary>
+
+```YAML
+openapi: "3.0.2"
+
+info:
+  title: Household Spaces API
+  version: "1.0.0"
+  description: API мобильного приложения для совместного ведения быта
+
+servers:
+  - url: https://api.household.test/v1
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Auth
+    description: Аутентификация и доступ
+  - name: Spaces
+    description: Пространства пользователя
+  - name: Members
+    description: Участники пространства
+  - name: Tasks
+    description: Задачи по дому
+  - name: Shopping
+    description: Список покупок и категории покупок
+  - name: Calendar
+    description: Календарь пространства
+  - name: InviteCode
+    description: Код приглашения в пространство
+
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Вход в приложение
+      operationId: login
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            example:
+              login: "anna@example.com"
+              password: "Pass123"
+      responses:
+        "200":
+          description: Пользователь успешно авторизован
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthSessionResponse"
+              example:
+                accessToken: "jwt-access-token"
+                user:
+                  id: 1
+                  fullName: "Анна Смирнова"
+                  email: "anna@example.com"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "423":
+          $ref: "#/components/responses/AccountLockedResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Регистрация пользователя
+      operationId: register
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+            example:
+              fullName: "Анна Смирнова"
+              email: "anna@example.com"
+              password: "Pass123"
+              consentAccepted: true
+      responses:
+        "201":
+          description: Пользователь зарегистрирован и авторизован
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthSessionResponse"
+              example:
+                accessToken: "jwt-access-token"
+                user:
+                  id: 1
+                  fullName: "Анна Смирнова"
+                  email: "anna@example.com"
+        "409":
+          $ref: "#/components/responses/UserAlreadyExistsResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /auth/recovery:
+    post:
+      tags: [Auth]
+      summary: Запуск восстановления доступа
+      operationId: startRecovery
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecoveryRequest"
+            example:
+              email: "anna@example.com"
+      responses:
+        "202":
+          description: Сценарий восстановления доступа запущен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+              example:
+                message: "Если пользователь с таким email существует, инструкции по восстановлению будут отправлены"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces:
+    get:
+      tags: [Spaces]
+      summary: Получение списка пространств пользователя
+      operationId: getSpaces
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+      responses:
+        "200":
+          description: Список пространств получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpacesListResponse"
+              example:
+                spaces:
+                  - id: 1
+                    name: "Дом"
+                  - id: 2
+                    name: "Дача"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    post:
+      tags: [Spaces]
+      summary: Создание пространства
+      operationId: createSpace
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpaceCreateRequest"
+            example:
+              name: "Дом"
+      responses:
+        "201":
+          description: Пространство создано
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpaceCreateResponse"
+              example:
+                space:
+                  id: 1
+                  name: "Дом"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/join:
+    post:
+      tags: [Spaces]
+      summary: Вход в пространство по коду приглашения
+      operationId: joinSpaceByCode
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JoinSpaceRequest"
+            example:
+              inviteCode: "HOME-84QK-19"
+      responses:
+        "200":
+          description: Пользователь добавлен в пространство или уже является участником
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JoinSpaceResponse"
+              example:
+                space:
+                  id: 1
+                  name: "Дом"
+                alreadyMember: false
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "404":
+          $ref: "#/components/responses/InviteCodeNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}:
+    get:
+      tags: [Spaces]
+      summary: Получение информации о пространстве
+      operationId: getSpaceDetails
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Информация о пространстве получена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpaceDetailsResponse"
+              example:
+                id: 1
+                name: "Дом"
+                role:
+                  code: "admin"
+                  name: "Администратор"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/members:
+    get:
+      tags: [Members]
+      summary: Получение списка участников пространства
+      operationId: getSpaceMembers
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Список участников получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembersListResponse"
+              example:
+                members:
+                  - id: 1
+                    fullName: "Анна Смирнова"
+                  - id: 2
+                    fullName: "Петр Петров"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/tasks:
+    get:
+      tags: [Tasks]
+      summary: Получение списка задач пространства
+      operationId: getTasks
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Список задач получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TasksListResponse"
+              example:
+                tasks:
+                  - id: 1
+                    title: "Помыть пол"
+                    status: "active"
+                    assignee:
+                      id: 2
+                      fullName: "Петр Петров"
+                    deadline: "2026-10-03T18:00:00Z"
+                    recurrenceInterval: 7
+                    addToCalendar: true
+                    createdAt: "2026-09-28T11:00:00Z"
+                  - id: 2
+                    title: "Вынести мусор"
+                    status: "done"
+                    assignee: null
+                    deadline: null
+                    recurrenceInterval: null
+                    addToCalendar: false
+                    createdAt: "2026-09-28T12:00:00Z"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    post:
+      tags: [Tasks]
+      summary: Создание задачи
+      operationId: createTask
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+        - $ref: "#/components/parameters/SpaceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskCreateRequest"
+            example:
+              title: "Помыть пол"
+              assigneeId: 2
+              deadline: "2026-10-03T18:00:00Z"
+              recurrenceInterval: 7
+              addToCalendar: true
+      responses:
+        "201":
+          description: Задача создана
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/tasks/{taskId}:
+    patch:
+      tags: [Tasks]
+      summary: Редактирование задачи
+      operationId: updateTask
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/TaskId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskUpdateRequest"
+            example:
+              title: "Помыть пол и кухню"
+              assigneeId: 2
+              deadline: "2026-10-04T18:00:00Z"
+              recurrenceInterval: 7
+              addToCalendar: true
+      responses:
+        "200":
+          description: Задача обновлена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/TaskNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    delete:
+      tags: [Tasks]
+      summary: Удаление задачи
+      operationId: deleteTask
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/TaskId"
+      responses:
+        "204":
+          description: Задача удалена
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/TaskNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/tasks/{taskId}/status:
+    patch:
+      tags: [Tasks]
+      summary: Изменение статуса задачи
+      operationId: updateTaskStatus
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/TaskId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskStatusUpdateRequest"
+            example:
+              status: "done"
+      responses:
+        "200":
+          description: Статус задачи обновлен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/TaskNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/shopping:
+    get:
+      tags: [Shopping]
+      summary: Получение списка покупок
+      operationId: getShoppingItems
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Список покупок получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListResponse"
+              example:
+                items:
+                  - id: 1
+                    title: "Молоко"
+                    category:
+                      id: 1
+                      name: "Еда"
+                    isBought: false
+                    createdAt: "2026-09-29T08:40:00Z"
+                  - id: 2
+                    title: "Порошок"
+                    category:
+                      id: 2
+                      name: "Для дома"
+                    isBought: true
+                    createdAt: "2026-09-29T09:15:00Z"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    post:
+      tags: [Shopping]
+      summary: Создание позиции в списке покупок
+      operationId: createShoppingItem
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+        - $ref: "#/components/parameters/SpaceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingItemCreateRequest"
+            example:
+              title: "Молоко"
+              categoryId: 1
+      responses:
+        "201":
+          description: Позиция создана
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingItemResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/shopping/categories:
+    get:
+      tags: [Shopping]
+      summary: Получение активных категорий покупок пространства
+      operationId: getShoppingCategories
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Активные категории покупок, доступные для выбора, получены
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCategoriesListResponse"
+              example:
+                categories:
+                  - id: 1
+                    name: "Еда"
+                  - id: 2
+                    name: "Для дома"
+                  - id: 3
+                    name: "На дачу"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    post:
+      tags: [Shopping]
+      summary: Создание новой категории покупки
+      operationId: createShoppingCategory
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+        - $ref: "#/components/parameters/SpaceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingCategoryCreateRequest"
+            example:
+              name: "На дачу"
+      responses:
+        "201":
+          description: Категория покупки создана
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingCategoryResponse"
+              example:
+                id: 3
+                name: "На дачу"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/shopping/categories/{categoryId}:
+    delete:
+      tags: [Shopping]
+      summary: Удаление категории покупки
+      operationId: deleteShoppingCategory
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/CategoryId"
+      responses:
+        "204":
+          description: Категория покупки скрыта из доступных для выбора
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/ShoppingCategoryNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/shopping/{itemId}:
+    patch:
+      tags: [Shopping]
+      summary: Изменение позиции в списке покупок
+      operationId: updateShoppingItem
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/ItemId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingItemUpdateRequest"
+            example:
+              title: "Молоко 2 л"
+              categoryId: 1
+              isBought: true
+      responses:
+        "200":
+          description: Позиция обновлена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingItemResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/ShoppingItemNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    delete:
+      tags: [Shopping]
+      summary: Удаление позиции из списка покупок
+      operationId: deleteShoppingItem
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/ItemId"
+      responses:
+        "204":
+          description: Позиция удалена
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/ShoppingItemNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/calendar:
+    get:
+      tags: [Calendar]
+      summary: Получение событий календаря пространства
+      operationId: getCalendarEvents
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: События календаря получены
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarEventsListResponse"
+              example:
+                events:
+                  - id: 1
+                    title: "Генеральная уборка"
+                    startsAt: "2026-10-05T10:00:00Z"
+                    reminderOffset: "day"
+                    participants:
+                      - id: 1
+                        fullName: "Анна Смирнова"
+                      - id: 2
+                        fullName: "Петр Петров"
+                    createdAt: "2026-09-29T10:00:00Z"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    post:
+      tags: [Calendar]
+      summary: Создание события календаря
+      operationId: createCalendarEvent
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+        - $ref: "#/components/parameters/SpaceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalendarEventCreateRequest"
+            example:
+              title: "Генеральная уборка"
+              startsAt: "2026-10-05T10:00:00Z"
+              reminderOffset: "day"
+              participantIds:
+                - 1
+                - 2
+      responses:
+        "201":
+          description: Событие создано
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarEventResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/calendar/{eventId}:
+    patch:
+      tags: [Calendar]
+      summary: Редактирование события календаря
+      operationId: updateCalendarEvent
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/EventId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalendarEventUpdateRequest"
+            example:
+              title: "Генеральная уборка и стирка"
+              startsAt: "2026-10-05T11:00:00Z"
+              reminderOffset: "hour"
+              participantIds:
+                - 1
+      responses:
+        "200":
+          description: Событие обновлено
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarEventResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/EventNotFoundResponse"
+        "422":
+          $ref: "#/components/responses/ValidationErrorResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    delete:
+      tags: [Calendar]
+      summary: Удаление события календаря
+      operationId: deleteCalendarEvent
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+        - $ref: "#/components/parameters/EventId"
+      responses:
+        "204":
+          description: Событие удалено
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/EventNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+  /spaces/{spaceId}/invite-code:
+    get:
+      tags: [InviteCode]
+      summary: Получение текущего кода приглашения
+      operationId: getInviteCode
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Код приглашения получен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InviteCodeResponse"
+              example:
+                code: "HOME-84QK-19"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+    patch:
+      tags: [InviteCode]
+      summary: Обновление кода приглашения
+      operationId: updateInviteCode
+      parameters:
+        - $ref: "#/components/parameters/XRequestId"
+        - $ref: "#/components/parameters/XIdempotencyKey"
+        - $ref: "#/components/parameters/SpaceId"
+      responses:
+        "200":
+          description: Код приглашения обновлен; предыдущий код недействителен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InviteCodeResponse"
+              example:
+                code: "HOME-92MN-41"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+        "404":
+          $ref: "#/components/responses/SpaceNotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalErrorResponse"
+
+components:
+  parameters:
+    XRequestId:
+      name: X-Request-Id
+      in: header
+      required: false
+      description: Идентификатор запроса для трассировки
+      schema:
+        type: string
+        format: uuid
+
+    XIdempotencyKey:
+      name: X-Idempotency-Key
+      in: header
+      required: true
+      description: Защита от повторной отправки запроса
+      schema:
+        type: string
+        format: uuid
+
+    SpaceId:
+      name: spaceId
+      in: path
+      required: true
+      description: Идентификатор пространства
+      schema:
+        type: integer
+        format: int32
+
+    TaskId:
+      name: taskId
+      in: path
+      required: true
+      description: Идентификатор задачи
+      schema:
+        type: integer
+        format: int32
+
+    ItemId:
+      name: itemId
+      in: path
+      required: true
+      description: Идентификатор позиции в списке покупок
+      schema:
+        type: integer
+        format: int32
+
+    CategoryId:
+      name: categoryId
+      in: path
+      required: true
+      description: Идентификатор категории покупки
+      schema:
+        type: integer
+        format: int32
+
+    EventId:
+      name: eventId
+      in: path
+      required: true
+      description: Идентификатор события календаря
+      schema:
+        type: integer
+        format: int32
+
+  responses:
+    UnauthorizedResponse:
+      description: Пользователь не аутентифицирован
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "AUTH-401"
+            errorMessage: "Пользователь не аутентифицирован"
+
+    ForbiddenResponse:
+      description: Недостаточно прав для выполнения операции
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "AUTH-403"
+            errorMessage: "Недостаточно прав для выполнения операции"
+
+    ValidationErrorResponse:
+      description: Ошибка валидации запроса
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "VAL-422"
+            errorMessage: "Запрос содержит некорректные данные"
+
+    InternalErrorResponse:
+      description: Внутренняя ошибка сервера
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "SYS-500"
+            errorMessage: "Внутренняя ошибка сервера"
+
+    AccountLockedResponse:
+      description: Учетная запись временно заблокирована
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "AUTH-423"
+            errorMessage: "Учетная запись временно заблокирована после 5 неудачных попыток входа"
+
+    UserAlreadyExistsResponse:
+      description: Пользователь с таким email уже существует
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "AUTH-409"
+            errorMessage: "Пользователь с таким email уже существует"
+
+    SpaceNotFoundResponse:
+      description: Пространство не найдено
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "SPACE-404"
+            errorMessage: "Пространство не найдено"
+
+    InviteCodeNotFoundResponse:
+      description: Код приглашения недействителен или не найден
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "INV-404"
+            errorMessage: "Неверный код приглашения"
+
+    TaskNotFoundResponse:
+      description: Задача не найдена
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "TASK-404"
+            errorMessage: "Задача не найдена"
+
+    ShoppingItemNotFoundResponse:
+      description: Позиция в списке покупок не найдена
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "SHOP-404"
+            errorMessage: "Позиция в списке покупок не найдена"
+
+    ShoppingCategoryNotFoundResponse:
+      description: Категория покупки не найдена
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "SHOP-CAT-404"
+            errorMessage: "Категория покупки не найдена"
+
+    EventNotFoundResponse:
+      description: Событие календаря не найдено
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          example:
+            errorCode: "CAL-404"
+            errorMessage: "Событие календаря не найдено"
+
+  schemas:
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          description: Логин пользователя
+        password:
+          type: string
+          format: password
+          description: Пароль пользователя
+
+    RegisterRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - fullName
+        - email
+        - password
+        - consentAccepted
+      properties:
+        fullName:
+          type: string
+          description: Имя пользователя
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+        password:
+          type: string
+          format: password
+          description: Пароль пользователя
+        consentAccepted:
+          type: boolean
+          description: Флаг согласия с обработкой персональных данных
+
+    RecoveryRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+
+    AuthSessionResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - accessToken
+        - user
+      properties:
+        accessToken:
+          type: string
+          description: Access-токен пользователя
+        user:
+          $ref: "#/components/schemas/AuthUser"
+
+    AuthUser:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - fullName
+        - email
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор пользователя
+        fullName:
+          type: string
+          description: Имя пользователя
+        email:
+          type: string
+          format: email
+          description: Email пользователя
+
+    MessageResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Текст сообщения
+
+    SpacesListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - spaces
+      properties:
+        spaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/SpaceSummary"
+
+    SpaceCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Название пространства
+
+    SpaceCreateResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - space
+      properties:
+        space:
+          $ref: "#/components/schemas/SpaceSummary"
+
+    JoinSpaceRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - inviteCode
+      properties:
+        inviteCode:
+          type: string
+          description: Код приглашения в пространство
+
+    JoinSpaceResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - space
+        - alreadyMember
+      properties:
+        space:
+          $ref: "#/components/schemas/SpaceSummary"
+        alreadyMember:
+          type: boolean
+          description: Состоял ли пользователь в пространстве ранее
+
+    SpaceDetailsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - role
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор пространства
+        name:
+          type: string
+          description: Название пространства
+        role:
+          $ref: "#/components/schemas/Role"
+
+    SpaceSummary:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор пространства
+        name:
+          type: string
+          description: Название пространства
+
+    MembersListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - members
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/MemberSummary"
+
+    MemberSummary:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - fullName
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор участника пространства
+        fullName:
+          type: string
+          description: Имя участника
+
+    TasksListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - tasks
+      properties:
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+
+    TaskCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Название задачи
+        assigneeId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Идентификатор исполнителя; если не указан, задача считается общей
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+          description: Дедлайн задачи
+        recurrenceInterval:
+          type: integer
+          nullable: true
+          description: Интервал повторения в днях; null означает, что задача не повторяется
+        addToCalendar:
+          type: boolean
+          description: Нужно ли добавить задачу в календарь пространства
+
+    TaskUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          description: Название задачи
+        assigneeId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Идентификатор исполнителя; null снимает назначение исполнителя
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+          description: Дедлайн задачи
+        recurrenceInterval:
+          type: integer
+          nullable: true
+          description: Интервал повторения в днях; null означает, что задача не повторяется
+        addToCalendar:
+          type: boolean
+          description: Нужно ли добавить задачу в календарь пространства
+
+    TaskStatusUpdateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+      properties:
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+
+    TaskResponse:
+      $ref: "#/components/schemas/Task"
+
+    Task:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - status
+        - assignee
+        - deadline
+        - recurrenceInterval
+        - addToCalendar
+        - createdAt
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор задачи
+        title:
+          type: string
+          description: Название задачи
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        assignee:
+          type: object
+          nullable: true
+          additionalProperties: false
+          required:
+            - id
+            - fullName
+          properties:
+            id:
+              type: integer
+              format: int32
+            fullName:
+              type: string
+          description: Исполнитель задачи; null означает задачу без конкретного исполнителя
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+          description: Дедлайн задачи
+        recurrenceInterval:
+          type: integer
+          nullable: true
+          description: Интервал повторения в днях; null означает, что задача не повторяется
+        addToCalendar:
+          type: boolean
+          description: Добавлена ли задача в календарь
+        createdAt:
+          type: string
+          format: date-time
+          description: Дата и время создания задачи
+
+    ShoppingListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShoppingItem"
+
+    ShoppingItemCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - categoryId
+      properties:
+        title:
+          type: string
+          description: Название позиции в списке покупок
+        categoryId:
+          type: integer
+          format: int32
+          description: Идентификатор категории покупки
+
+    ShoppingItemUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          description: Название позиции в списке покупок
+        categoryId:
+          type: integer
+          format: int32
+          description: Идентификатор категории покупки
+        isBought:
+          type: boolean
+          description: Отмечена ли позиция как купленная
+
+    ShoppingItemResponse:
+      $ref: "#/components/schemas/ShoppingItem"
+
+    ShoppingItem:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - category
+        - isBought
+        - createdAt
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор позиции в списке покупок
+        title:
+          type: string
+          description: Название позиции в списке покупок
+        category:
+          $ref: "#/components/schemas/ShoppingCategory"
+        isBought:
+          type: boolean
+          description: Отмечена ли позиция как купленная
+        createdAt:
+          type: string
+          format: date-time
+          description: Дата и время создания позиции
+
+    ShoppingCategoriesListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - categories
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/ShoppingCategory"
+
+    ShoppingCategoryCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Название категории покупки
+
+    ShoppingCategoryResponse:
+      $ref: "#/components/schemas/ShoppingCategory"
+
+    ShoppingCategory:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор категории покупки
+        name:
+          type: string
+          description: Название категории покупки
+
+    CalendarEventsListResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/CalendarEvent"
+
+    CalendarEventCreateRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - startsAt
+      properties:
+        title:
+          type: string
+          description: Название события
+        startsAt:
+          type: string
+          format: date-time
+          description: Дата и время события
+        reminderOffset:
+          $ref: "#/components/schemas/ReminderOffset"
+        participantIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: Если массив пустой или не передан, событие считается общим для пространства
+
+    CalendarEventUpdateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          description: Название события
+        startsAt:
+          type: string
+          format: date-time
+          description: Дата и время события
+        reminderOffset:
+          $ref: "#/components/schemas/ReminderOffset"
+        participantIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: Новый список участников события
+
+    CalendarEventResponse:
+      $ref: "#/components/schemas/CalendarEvent"
+
+    CalendarEvent:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - startsAt
+        - reminderOffset
+        - participants
+        - createdAt
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Идентификатор события календаря
+        title:
+          type: string
+          description: Название события
+        startsAt:
+          type: string
+          format: date-time
+          description: Дата и время события
+        reminderOffset:
+          $ref: "#/components/schemas/ReminderOffset"
+        participants:
+          type: array
+          items:
+            $ref: "#/components/schemas/MemberSummary"
+          description: Участники события
+        createdAt:
+          type: string
+          format: date-time
+          description: Дата и время создания события
+
+    InviteCodeResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          description: Код приглашения в пространство
+
+    Role:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - name
+      properties:
+        code:
+          type: string
+          description: Технический код роли пользователя в пространстве
+        name:
+          type: string
+          description: Отображаемое название роли пользователя в пространстве
+
+    TaskStatus:
+      type: string
+      enum:
+        - active
+        - done
+      description: Статус задачи
+
+    ReminderOffset:
+      type: string
+      enum:
+        - none
+        - hour
+        - day
+        - week
+        - month
+      description: Срок напоминания о событии
+
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - errorCode
+        - errorMessage
+      properties:
+        errorCode:
+          type: string
+          description: Код ошибки
+        errorMessage:
+          type: string
+          description: Описание ошибки
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+```
+</details>
+
+
