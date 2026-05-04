@@ -1,0 +1,226 @@
+<!doctype html><html lang=en dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-concept/concept" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.1"><title data-rh=true>Концепция и границы | Household</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://polyau.github.io/household/img/docusaurus-social-card.jpg /><meta data-rh=true name=twitter:image content=https://polyau.github.io/household/img/docusaurus-social-card.jpg /><meta data-rh=true property=og:url content=https://polyau.github.io/household/docs/concept /><meta data-rh=true property=og:locale content=en /><meta data-rh=true name=docusaurus_locale content=en /><meta data-rh=true name=docsearch:language content=en /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="Концепция и границы | Household"/><meta data-rh=true name=description content="Подробное описание концепции проекта с точки зрения проблемы, которую он решает."/><meta data-rh=true property=og:description content="Подробное описание концепции проекта с точки зрения проблемы, которую он решает."/><link data-rh=true rel=icon href=/household/img/favicon.ico /><link data-rh=true rel=canonical href=https://polyau.github.io/household/docs/concept /><link data-rh=true rel=alternate href=https://polyau.github.io/household/docs/concept hreflang=en /><link data-rh=true rel=alternate href=https://polyau.github.io/household/docs/concept hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://polyau.github.io/household/docs/concept/","name":"Концепция и границы","position":1}]}</script><script src=https://cdn.jsdelivr.net/npm/docusaurus-plugin-drawio/viewer.min.js></script><link rel=stylesheet href=/household/assets/css/styles.28a060b4.css /><script src=/household/assets/js/runtime~main.71b0785a.js defer></script><script src=/household/assets/js/main.ffa2ffd0.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-e26")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id=__docusaurus><link rel=preload as=image href=/household/img/logo.svg /><div role=region aria-label="Skip to main content"><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>Skip to main content</a></div><nav aria-label=Main class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/household/><div class=navbar__logo><img src=/household/img/logo.svg alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/household/img/logo.svg alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">Household</b></a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/household/docs/intro>Документация</a><a class="navbar__item navbar__link" href=/household/docs/api>API</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href=https://github.com/facebook/docusaurus target=_blank rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/intro><span title="Главная страница" class=linkLabel_WmDU>Главная страница</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current=page href=/household/docs/concept><span title="Концепция и границы" class=linkLabel_WmDU>Концепция и границы</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/functional_requirements><span title="Функциональные требования" class=linkLabel_WmDU>Функциональные требования</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/non-functional_requirements><span title="Нефункциональные требования" class=linkLabel_WmDU>Нефункциональные требования</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/requirements_collection><span title="Сбор требований" class=linkLabel_WmDU>Сбор требований</span></a><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class=menu__list-item-collapsible><a class="categoryLink_byQd menu__link menu__link--sublist" href=/household/docs/bpmn><span title="Модели бизнес-процессов" class=categoryLinkLabel_W154>Модели бизнес-процессов</span></a><button aria-label="Expand sidebar category 'Модели бизнес-процессов'" aria-expanded=false type=button class="clean-btn menu__caret"></button></div><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/uml><span title=UML class=linkLabel_WmDU>UML</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/screen_layouts><span title="Макеты экранов" class=linkLabel_WmDU>Макеты экранов</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/api><span title="Спецификация API" class=linkLabel_WmDU>Спецификация API</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/async_interaction><span title="Проектирование асинхронного взаимодействия" class=linkLabel_WmDU>Проектирование асинхронного взаимодействия</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/data_storage><span title="Технологии хранения данных" class=linkLabel_WmDU>Технологии хранения данных</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/erd><span title=ERD class=linkLabel_WmDU>ERD</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/household/docs/platformization><span title=Платформизация class=linkLabel_WmDU>Платформизация</span></a></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=Breadcrumbs><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label="Home page" class=breadcrumbs__link href=/household/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>Концепция и границы</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Концепция и границы</h1></header><h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=бизнес-требования><em><strong>Бизнес-требования</strong></em><a href=#бизнес-требования class=hash-link aria-label="Direct link to бизнес-требования" title="Direct link to бизнес-требования" translate=no>​</a></h3>
+<p><strong>1. Описание проблемы</strong></p>
+<p>Люди, ведущие совместный быт (пара/семья/соседи с нянями/уборщиками/поварами - назовём их сожителями), обычно сталкиваются с большим количеством совместных бытовых задач:</p>
+<ul>
+<li class="">Дела по дому: требуют распределения между сожителями.</li>
+<li class="">Составление списка покупок: сожители должны формировать общий список покупок.</li>
+<li class="">Учёт бюджета: сожители должны планировать бюджет, учитывать расходы, разделять траты.</li>
+<li class="">Учёт занятости: сожители могут планировать совместные дела, дела друг для друга.</li>
+</ul>
+<p>Потребности и боли целевой аудитории:</p>
+<ul>
+<li class="">Фиксировать, что нужно сделать или купить.</li>
+<li class="">Распределять обязанности и понимать, кто что должен делать и кто что делал.</li>
+<li class="">Иметь чёткое представление о тратах с возможностью отслеживать и разделять траты.</li>
+<li class="">Устанавливать напоминания и уведомления себе и сожителям о планах и задачах.</li>
+<li class="">Иметь общее онлайн-пространство (одно или несколько).</li>
+</ul>
+<p>Ключевой момент: сожители нуждаются в инструменте, который позволит <em><strong>удобно</strong></em> вести описанные задачи.</p>
+<p>Текущие альтернативы:</p>
+<ul>
+<li class="">Обсуждать устно и держать в голове.</li>
+<li class="">Обсуждать в чатах мессенджеров.</li>
+<li class="">Заметки и списки в приложениях (Google Keep, Apple Notes, Todoist).</li>
+<li class="">Таблицы в Excel/Google Sheets.</li>
+<li class="">Рабочие пространства (Notion, Obsidian).</li>
+</ul>
+<p>Также дополнительно могут использоваться календари и приложения для ведения расходов.</p>
+<p>Данные решения либо нацелены на решение узкого круга задач, либо не предполагают совместного ведения, либо требуют сложной настройки, либо неудобны в использовании (например, не предоставляют возможности удобного использования с телефона).
+Следовательно, вести совместные бытовые дела с помощью приведенных решений обычно неудобно, при этом для полного контроля требуется использовать несколько решений одновременно.</p>
+<p>Предлагаемый продукт даёт возможность иметь единый инструмент для совместного ведения быта, который объединяет ключевые бытовые процессы в одном месте и позволяет упростить планирование, за счет чего снижает количество конфликтов и забываний.</p>
+<p><strong>2. Целевая аудитория</strong></p>
+<p><strong>Сегменты аудитории</strong>:</p>
+<ul>
+<li class="">Пары, живущие вместе.</li>
+<li class="">Семьи.</li>
+<li class="">Соседи по квартире/комнате.</li>
+</ul>
+<p>В том числе с нянями/уборщиками/поварами.</p>
+<p>Пользователями могут быть <em><strong>любые</strong></em> люди, способные пользоваться телефоном, ведущие совместный быт.</p>
+<p><strong>Потребности и ожидания</strong>:</p>
+<ul>
+<li class="">Быстрое добавление задач и покупок в списки себе и сожителям.</li>
+<li class="">Удобный интерфейс для телефона.</li>
+<li class="">Получать, отправлять и настраивать напоминания и уведомления.</li>
+<li class="">Отслеживать статусы дел и покупок.</li>
+<li class="">Учёт расходов: добавление/планирование/отслеживание расходов, распределение трат.</li>
+<li class="">Ведение общего календаря (совместные/бытовые планы).</li>
+<li class="">Иметь общее онлайн-пространство (одно или несколько).</li>
+</ul>
+<p>Результатом использование продукта должна быть удволетворенность пользователей возможностью удобно и структурированно вести совместный быт. Это должно значительно упростить быт и уменьшить количество забываемых дел и конфликтов между сожителями.</p>
+<p><strong>3. Стейкхолдеры</strong></p>
+<p><strong>Внешние:</strong></p>
+<table><thead><tr><th>Стейкхолдер<th>Роль<th>Влияние<tbody><tr><td><strong>Пользователи и администраторы общих пространств</strong><td>ежедневно используют продукт; формируют требования через ожидания, обратную связь; администраторы управляют составом участников и правилами внутри пространства (роли, доступы, настройки).<td>высокое - их удовлетворенность и регулярное использование определяют востребованность продукта. Администраторы дополнительно влияют на то, как продукт приживётся в конкретной группе.<tr><td><strong>Инвесторы / Спонсоры</strong><td>предоставляют финансирование и могут задавать ожидания по росту/метрикам/приоритетам/срокам; участвуют в стратегическом контроле (например, требуют отчетность по KPI или ограничивают бюджет).<td>высокое (может зависеть от доли участия)</table>
+<p><strong>Внутренние:</strong></p>
+<table><thead><tr><th>Стейкхолдер<th>Роль<th>Влияние<tbody><tr><td><strong>Заказчик / Инициатор (основатель или организация)</strong><td>инициирует создание продукта и обеспечивает финансирование (полное или частичное); формулирует стратегические цели, ограничения по срокам и бюджету; утверждает ключевые решения по запуску и развитию.<td>максимальное<tr><td><strong>Владелец продукта</strong><td>переводит цели заказчика/спонсоров в требования к продукту; управляет backlog, приоритизацией и релизами; отвечает за ценность продукта для пользователей и достижение продуктовых KPI.<td>высокое<tr><td><strong>Команда разработки</strong><td>проектирует и реализует решение, обеспечивает качество, безопасность и эксплуатационную готовность; дает оценки трудозатрат и технические ограничения; предлагает варианты архитектуры.<td>высокое - влияет на технические решения, сроки, качество реализации и риски<tr><td><strong>Маркетологи</strong><td>формируют позиционирование продукта и коммуникации; планируют каналы привлечения и активации; участвуют в настройке метрик привлечения/конверсии, онбординга и удержания.<td>среднее</table>
+<p>RACI для отображения влияния выделенных стейкхолдеров на продукт:</p>
+<table><thead><tr><th>Задачи \ Участники<th>Юзеры<th>Инвесторы/спонсоры<th>Заказчик/инициатор<th>Владелец продукта<th>Команда разраб.<th>Марке-толог<tbody><tr><td>Инициирование создания продукта<td>-<td>I<td>A/R<td>I<td>I<td>I<tr><td>Формирование требований через ожидания и обратную связь<td>R<td>I<td>I<td><strong>A</strong><td>A<td>I<tr><td>Ожидания по росту/приоритетам/срокам<td>-<td>R<td>R<td>A<td>I<td>I<tr><td>Стратегический контроль, ограничения по срокам и бюджету<td>-<td>A/R<td><strong>A/R</strong><td>C<td>C<td>I<tr><td>Сбор и формирование требований<td>-<td>C<td>C<td>A/R<td><strong>R</strong><td>I<tr><td>Управление backlog, приоритизацией задач и релизами<td>-<td>I<td>C<td>A/R<td>C<td>I<tr><td>Техническая реализация и полное сопровождение решения<td>-<td>I<td>I<td><strong>A</strong><td><strong>R</strong><td>I<tr><td>Формирование позиционирование продукта и коммуникаций<td>C<td>I<td>I<td><strong>A</strong><td>C<td>R<tr><td>Привлечение клиентов<td>-<td>C<td>C<td>A<td>I<td>R</table>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class=admonitionHeading_Gvgb><span class=admonitionIcon_Rf37><svg viewBox="0 0 14 16"><path fill-rule=evenodd d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"/></svg></span>note</div><div class=admonitionContent_BuS1><p><em>R = Responsible (also recommender) - непосредственно выполняет задание.<br/>A = Accountable - принимает работу и несёт ответственность за результат.<br/>C = Consulted - оказывает консультативную помощь.<br/>I = Informed - в курсе принимаемых решений и хода выполнения задачи.</em></div></div>
+<p><strong>4. Бизнес-цели и ключевые метрики</strong></p>
+<p><strong>Основные бизнес-цели</strong>:</p>
+<ol>
+<li class="">Запустить MVP и проверить востребованность: в течение 12 недель после начала пилота привлечь не менее 300 созданных пространств, из которых не менее 50% будут “активными” (минимум 2 участника и минимум 5 действий в неделю).</li>
+<li class="">Доказать удержание: в течение 12 недель после запуска MVP достичь D30 retention = >20% среди пространств, где хотя бы 2 участника.</li>
+<li class="">Доказать "активацию" (что люди действительно начали пользоваться): в течение 8 недель обеспечить, чтобы минимум 50% новых пространств за первые 7 дней выполняли "ключевой сценарий" (добавили участника + создали минимум 3 задачи/покупки + добавили минимум 1 событие календаря).</li>
+<li class="">Настроить масштабируемое привлечение: к концу 12-й недели получить минимум 2 устойчивых канала привлечения, дающих суммарно минимум 150 новых пространств/месяц при конверсии "переход из канала → установка приложения" минимум 20%.</li>
+<li class="">Обеспечить стабильность и эксплуатационную готовность MVP: в течение первых 3 месяцев после запуска поддерживать доступность сервиса более 99% в месяц, среднее время отклика на ключевые запросы максимум 500 мс и долю сессий без сбоев более 99%.</li>
+<li class="">Проверить монетизацию после валидации MVP: в течение первых 3 месяцев развивать продукт без монетизации и считать MVP валидированным при достижении D30 retention минимум 20% и Activation rate минимум 50%, а в течение следующих 3 месяцев запустить пилот премиум-функций и добиться, чтобы минимум 5% активных пространств выразили желание платить (например, начали пробный период подписки).</li>
+</ol>
+<p><strong>Ключевые метрики (KPIs)</strong>:</p>
+<ul>
+<li class="">Количество созданных пространств.</li>
+<li class="">Среднее число активных участников в пространстве.</li>
+<li class="">Количество действий на пространство в день/неделю/месяц.</li>
+<li class="">% пространств, использующих определенный функционал (например, календарь или уведомления).</li>
+<li class="">Retention D7/D30.</li>
+<li class="">Activation rate (доля пространств, прошедших ключевой сценарий за 7 дней).</li>
+<li class="">Технические: сессии без сбоев, время отклика на запросы, доступность сервиса.</li>
+<li class="">Желание платить: доля активных пространств, начавших пробный период подписки.</li>
+<li class="">Конверсия "переход из канала → установка приложения" по каждому каналу.</li>
+</ul>
+<p>Дерево метрик:</p>
+<p><img decoding=async loading=lazy alt=image.png src=/household/assets/images/image-b1332af12b48db62e61096e6a4ab63c5.png width=2551 height=1079 class=img_ev3q /></p>
+<p><strong>5. Описание продукта</strong></p>
+<p><strong>Общая концепция</strong>:</p>
+<p>Мобильное приложение, позволяющее людям, ведущим совместный быт (семья/пара/соседи с нянями/уборщиками/поварами), делать это удобно, создавая общие онлайн-пространства, где можно вести общие списки покупок, распределять домашние обязанности, учитывать расходы, вести общий календарь, подключать уведомления о нужных событиях.</p>
+<p>Ценность для пользователей - удобство и структурированность в ведении совместного быта, благодаря чему уменьшаются забывания и конфликты.</p>
+<p>Ценность для бизнеса - рост числа активных пользователей и потенциал монетизации через подписку/премиум-функции/рекламу.</p>
+<p><strong>Ключевые функции</strong>:</p>
+<ul>
+<li class="">Общее пространство: создание пространства, приглашения, роли.</li>
+<li class="">Задачи по дому: создание, назначение, статусы, повторяющиеся задачи, напоминания.</li>
+<li class="">Список покупок: общий список, категории, отметка “куплено”.</li>
+<li class="">Учёт расходов: добавление/планирование/отслеживание расходов, распределение трат.</li>
+<li class="">Календарь: совместные/бытовые события, напоминания.</li>
+<li class="">Уведомления: пуши о назначениях задачи, создании планов, пополнении списка покупок, дедлайнах, изменениях в списке покупок.</li>
+</ul>
+<p><strong>6. Риски</strong></p>
+<p><strong>Риски и стратегии управления рисками</strong>:</p>
+<table><thead><tr><th>Риск<th>Стратегия<th>Вероятность<tbody><tr><td>Низкая вовлечённость пользователей.<td>Делать максимально быстрый UX (1–2 действия на добавление), вводить шаблоны задач/покупок, повторяющиеся задачи, умные напоминания; улучшать онбординг.<td>высокая<tr><td>Разрастание объёма проекта из-за множества возможных фич (локация, синхронизация календарей, распознавание чеков и т.д.).<td>Зафиксировать границы MVP; вести бэклог с приоритизацией; релизить по версиям, не добавляя "дорогие" функции до валидации MVP.<td>высокая<tr><td>Конфликты и недоверие внутри пространства из-за учёта расходов/обязанностей (споры, ошибки, обвинения).<td>Добавить прозрачность (история изменений), сценарий "оспорить/подтвердить" для расходов, понятные правила доступа и ролей; добавить комментарии к расходам/задачам.<td>средняя<tr><td>Проблемы приватности и безопасности (утечка данных о тратах/событиях/участниках; доступ в чужое пространство).<td>Строгая модель доступа (пространства, роли, права), защита авторизации, аудит критичных действий, минимизация чувствительных данных в MVP; в случае добавления функции отслеживания местоположения - строго по согласию пользователей и с настройками видимости.<td>средняя<tr><td>Сложности совместного редактирования (одновременно меняют список покупок/задачи - рассинхрон).<td>Сервер - единый источник истины; версии/временные метки изменений; уведомления о конфликте и приоритет последнему изменению для простых сущностей; хранить журнал изменений для восстановления.<td>средняя<tr><td>Технические сбои и недоступность сервиса.<td>Предусмотреть мониторинг доступности и ошибок, логирование, резервное копирование, лимиты на запросы; для критичных сценариев (списки/задачи) предусмотреть повтор отправки запросов и сохранение черновиков на клиенте.<td>средняя<tr><td>Зависимость от внешних платформ (уведомления, магазины приложений, возможные ограничения/изменения правил).<td>Закладывать возможность деградации: если пуши недоступны, использовать встроенные уведомления; не строить MVP на обязательных интеграциях; соблюдать требования к публикации приложений.<td>низкая</table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=границы-и-ограничения><em><strong>Границы и ограничения</strong></em><a href=#границы-и-ограничения class=hash-link aria-label="Direct link to границы-и-ограничения" title="Direct link to границы-и-ограничения" translate=no>​</a></h3>
+<p><strong>7. Основные функции продукта:</strong></p>
+<p><em>Функции, которые <strong>будут</strong> реализованы в текущей версии продукта (MVP):</em></p>
+<table><thead><tr><th>Функция<th>Что включает<tbody><tr><td><strong>Общее пространство</strong><td>• Создание пространства и управление им.<br/>• Приглашение участников по коду, вход/выход из пространства.<br/>• Роли и права доступа: администратор/участник.<tr><td><strong>Задачи по дому</strong><td>• Создание задач, назначение исполнителя, дедлайн, повторяемость.<br/>• Отметка выполнения.<br/>• Добавление задач в календарь.<tr><td><strong>Список покупок</strong><td>• Общие списки покупок в рамках пространства.<br/>• Категории, отметка "куплено", удаление/редактирование позиций.<tr><td><strong>Календарь</strong><td>• Создание событий для сожителей (совместные/бытовые планы).<br/>• Настройка участников событий.<tr><td><strong>Уведомления</strong><td>• О событиях в календаре.<br/>• О назначении и дедлайнах задач по дому.</table>
+<p><em>Функции, которые <strong>не будут</strong> реализованы в рамках текущей версии продукта:</em></p>
+<ul>
+<li class="">Учёт расходов (лучше отложить в соотвествии с анализом рисков).</li>
+<li class="">Полноценная замена личных календарей пользователей (ведение личных планов).</li>
+<li class="">Синхронизация календаря с внешними календарями (например, Google/Apple) и полноценная интеграция занятости.</li>
+<li class="">Реальные платежи/переводы денег внутри приложения.</li>
+<li class="">Умный дом, датчики, интеграция с железом.</li>
+<li class="">Распознавание чеков (OCR), автоматическая категоризация трат.</li>
+<li class="">Отслеживание местоположения.</li>
+<li class="">Расширенные роли (няня/уборщик/гость) и ограничения прав доступа.</li>
+<li class="">Комментарии к задачам/спискам.</li>
+<li class="">Офлайн-режим с полноценной синхронизацией и разрешением конфликтов.</li>
+<li class="">Расширенные статусы задач.</li>
+</ul>
+<table><thead><tr><th>MoSCoW<th>Функции<tbody><tr><td><strong>Must</strong><td>пространство, приглашения, задачи, покупки, авторизация<tr><td><strong>Should</strong><td>календарь, повторяемость задач, пуш-уведомления (минимальный набор)<tr><td><strong>Could</strong><td>шаблоны задач, центр уведомлений в приложении<tr><td><strong>Won’t</strong><td>учёт расходов, синхронизация внешних календарей, платежи, OCR чеков, категоризация трат, геотрекинг, расширенные роли, комментарии, офлайн-режим</table>
+<p><em><strong>Must do</strong> - без этих функций проект не запустится.
+<strong>Should do</strong> - эти функции обеспечивают критичное преимущество и важны для выпуска. Для их реализации можно использовать обходные пути, сроки их реализации могут быть менее жесткими.
+<strong>Could do</strong> - менее критичные истории, полезные, но без них запуск произойдет успешно, без отклонения от целей.
+<strong>Won't do</strong> - исключаем из поставки, можем вернуться к этому вопросу в будущем.</em></p>
+<p><strong>8. Версии продукта и план развития</strong></p>
+<ul>
+<li class="">Опишите план развития продукта на следующие версии. Укажите, какие функции и обновления планируется добавить на каждом этапе.</li>
+</ul>
+<p><strong>Версия 1.0</strong> - MVP:</p>
+<ul>
+<li class="">Пространства + приглашения + роли (админ/участник).</li>
+<li class="">Задачи (назначение, дедлайн, повторяемость, отметка выполнения).</li>
+<li class="">Список покупок (общий, категории, “куплено”).</li>
+<li class="">Календарь пространства (события, участники).</li>
+<li class="">Уведомления о событиях календаря и дедлайнах/назначениях задач.</li>
+</ul>
+<p><strong>Версия 1.1</strong> - Улучшение удобства и вовлечения:</p>
+<ul>
+<li class="">Центр уведомлений внутри приложения (лента событий/изменений по пространству).</li>
+<li class="">Комментарии к задачам/покупкам (чтобы уменьшать риск недопониманий).</li>
+<li class="">Шаблоны задач/покупок (типовые наборы: уборка, продукты на неделю).</li>
+<li class="">Улучшение онбординга и подсказок (помочь быстрее пройти ключевой сценарий).</li>
+<li class="">Более гибкие настройки уведомлений.</li>
+<li class="">Расширенные статусы задач.</li>
+</ul>
+<p><strong>Версия 1.2 -</strong> Учёт расходов:</p>
+<ul>
+<li class="">Учёт расходов (добавление/планирование/отслеживание).</li>
+<li class="">Распределение долей.</li>
+<li class="">Подтверждение/оспаривание расходов или пометка "спорный".</li>
+<li class="">Прозрачность: история изменений/кто добавил/кто изменил.</li>
+<li class="">Внедрение ненавязчивой рекламы.</li>
+</ul>
+<p><strong>Версия 2</strong> - Расширение:</p>
+<ul>
+<li class="">Интеграции календаря (синхронизация с внешними календарями, учет занятости).</li>
+<li class="">Расширенные роли и права (гость/уборщик/няня и т.п.)</li>
+<li class="">Офлайн-сценарии с надежной синхронизацией.</li>
+<li class="">OCR чеков.</li>
+<li class="">Автоматическая категоризация трат.</li>
+<li class="">Отслеживание местоположения.</li>
+<li class="">Пилот премиум-функций.</li>
+</ul>
+<p><strong>9. Ограничения</strong></p>
+<p><strong>Бюджет</strong>:</p>
+<p>Период оценки: разработка и запуск <strong>MVP за 4 месяца.</strong></p>
+<ol>
+<li class="">Фонд оплаты труда (сотрудники на полную ставку):</li>
+</ol>
+<table><thead><tr><th>Роль<th>Кол-во<th>Месячная зарплата (gross)<th>Сумма за 4 мес<tbody><tr><td>Владелец продукта<td>1<td>280 000<td>1 120 000<tr><td>Android-разработчик<td>1<td>220 000<td>880 000<tr><td>Backend-разработчик<td>1<td>250 000<td>1 000 000</table>
+<p>Итого ФОТ за 4 месяца: 3 000 000 рублей.</p>
+<ol>
+<li class="">Прочие расходы на 4 месяца:</li>
+</ol>
+<ul>
+<li class="">Юридические консультации и документы (политика обработки данных, пользовательское соглашение, консультации по хранению данных): 140 000 р (35 000 р/мес)</li>
+<li class="">Аренда серверной инфраструктуры: 12 400 р (3 100 р/мес x 4)</li>
+<li class="">Публикация приложения в Google Play: 2 500 р</li>
+<li class="">Пилотный маркетинговый бюджет: 100 000 р</li>
+</ul>
+<p>Итого прочие расходы: 882 500 р</p>
+<ol>
+<li class="">Резерв на непредвиденные расходы: 8% от ФОТ (срыв сроков, изменение ТЗ, рост цен, дополнительные консультации и тд): 240 000 р</li>
+</ol>
+<p><em><strong>Итого</strong></em>: общий бюджет на 4 месяца 3 494 900 р</p>
+<p><strong>Сроки</strong>:</p>
+<p>Общий срок до MVP: 4 месяца.</p>
+<table><thead><tr><th>Месяц<th>Этап<th>Основные работы<tbody><tr><td>1<td>Планирование и проектирование<td>• финализация требований, сценариев и границ MVP<br/>• прототипы основных экранов (пространство, задачи, покупки, календарь, уведомления)<br/>• модель данных, API, архитектура<tr><td>2<td>Разработка “скелета”<td>• авторизация, пространства, роли<br/>• задачи и покупки<br/>• уведомления<br/>• тестирование базовых сценариев<tr><td>3<td>Завершение MVP и стабильность<td>• календарь пространства<br/>• доведение UX, обработка ошибок<br/>• тестирование, исправления, подготовка к релизу<br/>• мониторинг, логи, резервное копирование<tr><td>4<td>Публикация и пилот<td>• публикация и настройка аналитики<br/>• пилот на ограниченной аудитории<br/>• сбор метрик</table>
+<p>Дальнейшее развитие по версиям:</p>
+<ul>
+<li class="">1.1 - удобство/центр уведомлений/шаблоны/комментарии - 3 месяцв.</li>
+<li class="">1.2 - расходы/реклама - 3 месяца.</li>
+<li class="">2.0 - интеграции/офлайн/премиум/геотрекинг/OCR/роли - 6 меясцев.</li>
+</ul>
+<p><strong>Ресурсы</strong>:</p>
+<ul>
+<li class="">
+<p>Люди:</p>
+<ul>
+<li class="">Владелец продукта - будет выполнять роль продакта, аналитика и маркетолога.</li>
+<li class="">Android-разработчик - будет писать приложение и отвечать за дизайн.</li>
+<li class="">Backend-разработчик - пишет бэкенд, работает с инфраструктурой, QA.</li>
+<li class="">Юрист - вне штата, консультации при необходимости.</li>
+</ul>
+</li>
+<li class="">
+<p>Инструменты:</p>
+<ul>
+<li class="">Документация: Confluence или аналог.</li>
+<li class="">Диаграммы: VIsio/Draw.io или аналоги.</li>
+<li class="">Прототипирование: Figma или аналог.</li>
+<li class="">Управление задачами: Jira или аналог.</li>
+</ul>
+</li>
+<li class="">
+<p>Арендованная инфраструктура:</p>
+<ul>
+<li class="">2 vCPU;</li>
+<li class="">4 RAM;</li>
+<li class="">Debian;</li>
+<li class="">100 Гб SSD;</li>
+<li class="">публичный IP.</li>
+</ul>
+</li>
+</ul></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col noPrint_WFHX"><a href=https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/concept/concept.md target=_blank rel="noopener noreferrer" class=theme-edit-this-page><svg fill=currentColor height=20 width=20 viewBox="0 0 40 40" class=iconEdit_Z9Sw aria-hidden=true><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"/></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href=/household/docs/intro><div class=pagination-nav__sublabel>Previous</div><div class=pagination-nav__label>Главная страница</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/household/docs/functional_requirements><div class=pagination-nav__sublabel>Next</div><div class=pagination-nav__label>Функциональные требования</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#бизнес-требования class="table-of-contents__link toc-highlight"><em><strong>Бизнес-требования</strong></em></a><li><a href=#границы-и-ограничения class="table-of-contents__link toc-highlight"><em><strong>Границы и ограничения</strong></em></a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Docs</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/household/docs/intro>Документация</a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>Community</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://stackoverflow.com/questions/tagged/docusaurus target=_blank rel="noopener noreferrer" class=footer__link-item>Stack Overflow<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://discordapp.com/invite/docusaurus target=_blank rel="noopener noreferrer" class=footer__link-item>Discord<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a><li class=footer__item><a href=https://x.com/docusaurus target=_blank rel="noopener noreferrer" class=footer__link-item>X<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>More</div><ul class="footer__items clean-list"><li class=footer__item><a href=https://github.com/facebook/docusaurus target=_blank rel="noopener noreferrer" class=footer__link-item>GitHub<svg width=13.5 height=13.5 aria-label="(opens in new tab)" class=iconExternalLink_nPIU><use href=#theme-svg-external-link /></svg></a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 My Project, Inc. Built with Docusaurus.</div></div></div></footer></div></body>

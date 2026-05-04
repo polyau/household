@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdochousehold=self.webpackChunkdochousehold||[]).push([["296"],{5214(e){e.exports=JSON.parse('{"title":"Household API","description":"OpenAPI-\u0441\u043F\u0435\u0446\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u043F\u0440\u043E\u0435\u043A\u0442\u0430"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdochousehold=self.webpackChunkdochousehold||[]).push([["255"],{1619(e){e.exports=JSON.parse('{"name":"docusaurus-plugin-redoc","id":"household"}')}}]);
