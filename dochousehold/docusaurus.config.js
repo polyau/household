@@ -15,7 +15,7 @@ const simplePlantUML = require('@akebifiky/remark-simple-plantuml');
 const config = {
   title: 'Household',
   tagline: 'Приложение для совместного ведения быта',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/house.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -103,7 +103,7 @@ const config = {
         title: 'Household',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/house.svg',
         },
         items: [
           {
@@ -163,7 +163,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} polyau. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

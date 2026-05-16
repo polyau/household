@@ -15,7 +15,6 @@ description: Раздел с описанием асинхронного вза�
 
 ```YAML
 asyncapi: "2.6.0"
-
 id: "urn:household:backend-notification-events:1.0.0"
 
 tags:
@@ -257,14 +256,12 @@ components:
           format: uuid
           description: Ключ идемпотентности для защиты от дублей
 
-    TaskAssignedNotificationPayload:
+    BaseNotificationPayload:
       type: object
-      additionalProperties: false
       required:
         - notificationId
         - recipientUserId
         - spaceId
-        - taskId
         - title
         - body
         - deeplink
@@ -279,9 +276,6 @@ components:
         spaceId:
           type: string
           format: uuid
-        taskId:
-          type: string
-          format: uuid
         title:
           type: string
           maxLength: 120
@@ -293,128 +287,62 @@ components:
         createdAt:
           type: string
           format: date-time
+
+    TaskAssignedNotificationPayload:
+      allOf:
+        - $ref: "#/components/schemas/BaseNotificationPayload"
+        - type: object
+          required:
+            - taskId
+          properties:
+            taskId:
+              type: string
+              format: uuid
 
     TaskDeadlineNotificationPayload:
-      type: object
-      additionalProperties: false
-      required:
-        - notificationId
-        - recipientUserId
-        - spaceId
-        - taskId
-        - deadline
-        - title
-        - body
-        - deeplink
-        - createdAt
-      properties:
-        notificationId:
-          type: string
-          format: uuid
-        recipientUserId:
-          type: string
-          format: uuid
-        spaceId:
-          type: string
-          format: uuid
-        taskId:
-          type: string
-          format: uuid
-        deadline:
-          type: string
-          format: date-time
-        title:
-          type: string
-          maxLength: 120
-        body:
-          type: string
-          maxLength: 500
-        deeplink:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
+      allOf:
+        - $ref: "#/components/schemas/BaseNotificationPayload"
+        - type: object
+          required:
+            - taskId
+            - deadline
+          properties:
+            taskId:
+              type: string
+              format: uuid
+            deadline:
+              type: string
+              format: date-time
 
     EventCreatedNotificationPayload:
-      type: object
-      additionalProperties: false
-      required:
-        - notificationId
-        - recipientUserId
-        - spaceId
-        - eventId
-        - startsAt
-        - title
-        - body
-        - deeplink
-        - createdAt
-      properties:
-        notificationId:
-          type: string
-          format: uuid
-        recipientUserId:
-          type: string
-          format: uuid
-        spaceId:
-          type: string
-          format: uuid
-        eventId:
-          type: string
-          format: uuid
-        startsAt:
-          type: string
-          format: date-time
-        title:
-          type: string
-          maxLength: 120
-        body:
-          type: string
-          maxLength: 500
-        deeplink:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
+      allOf:
+        - $ref: "#/components/schemas/BaseNotificationPayload"
+        - type: object
+          required:
+            - eventId
+            - startsAt
+          properties:
+            eventId:
+              type: string
+              format: uuid
+            startsAt:
+              type: string
+              format: date-time
 
     EventReminderNotificationPayload:
-      type: object
-      additionalProperties: false
-      required:
-        - notificationId
-        - recipientUserId
-        - spaceId
-        - eventId
-        - startsAt
-        - title
-        - body
-        - deeplink
-        - createdAt
-      properties:
-        notificationId:
-          type: string
-          format: uuid
-        recipientUserId:
-          type: string
-          format: uuid
-        spaceId:
-          type: string
-          format: uuid
-        eventId:
-          type: string
-          format: uuid
-        startsAt:
-          type: string
-          format: date-time
-        title:
-          type: string
-          maxLength: 120
-        body:
-          type: string
-          maxLength: 500
-        deeplink:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
+      allOf:
+        - $ref: "#/components/schemas/BaseNotificationPayload"
+        - type: object
+          required:
+            - eventId
+            - startsAt
+          properties:
+            eventId:
+              type: string
+              format: uuid
+            startsAt:
+              type: string
+              format: date-time
+
 ```
 </details>

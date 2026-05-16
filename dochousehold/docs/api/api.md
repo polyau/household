@@ -1667,7 +1667,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
 ```
 </details>
 
