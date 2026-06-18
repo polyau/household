@@ -4,32 +4,32 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Общие пространства',
+    Svg: require('@site/static/img/common_spaces_dino.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Создавайте пространства для семьи, пары или соседей и приглашайте участников. 
+        Ведите общие бытовые дела и смотрите актуальную информацию по делам участников.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Задачи и покупки',
+    Svg: require('@site/static/img/tasks_shopping_dino.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Фиксируйте задачи по дому, назначайте исполнителей, отмечайте выполнение и ведите общий список покупок. 
+        Это позволяет не держать обязанности в голове и вести их совместно.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Календарь и уведомления',
+    Svg: require('@site/static/img/calendar_notifications_dino.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Добавляйте общие события в календарь пространства и настраивайте напоминания. 
+        Уведомления помогают узнавать о назначенных задачах, дедлайнах и приближающихся событиях.
       </>
     ),
   },

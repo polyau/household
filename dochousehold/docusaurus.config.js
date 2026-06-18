@@ -118,7 +118,7 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/polyau/household',
             label: 'GitHub',
             position: 'right',
           },
@@ -134,32 +134,27 @@ const config = {
                 label: 'Документация',
                 to: '/docs/intro',
               },
+              {
+                label: 'API',
+                to: '/docs/api'
+              }
             ],
           },
           {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
+            title: 'Author',
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/polyau',
               },
+              {
+                label: 'Telegram',
+                href: 'https://t.me/polyau'
+              },
+              {
+                label: 'polinavigovskaa@gmail.com',
+                href: 'mailto:polinavigovskaa@gmail.com'
+              }
             ],
           },
         ],

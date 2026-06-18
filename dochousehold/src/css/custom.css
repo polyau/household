@@ -41,7 +41,7 @@
   --ifm-code-color: #5b3d24;
   --ifm-code-font-size: 95%;
 
-  /* Footer */
+  /* Footer variables for light theme */
   --ifm-footer-background-color: #3b2f20;
   --ifm-footer-color: #f8f1e6;
   --ifm-footer-link-color: #d8e8c3;
@@ -79,11 +79,106 @@
   --ifm-code-background: #31281d;
   --ifm-code-color: #d8e8c3;
 
-  /* Footer */
+  /* Footer variables for dark theme */
   --ifm-footer-background-color: #2a2118;
   --ifm-footer-color: #f4eadc;
   --ifm-footer-link-color: #a8c686;
   --ifm-footer-title-color: #ffffff;
 
   --docusaurus-highlighted-code-line-bg: rgba(168, 198, 134, 0.18);
+}
+
+/* =========================
+   Footer override
+   ========================= */
+
+/* Light theme footer */
+html[data-theme='light'] .footer,
+html[data-theme='light'] .footer--light,
+html[data-theme='light'] .footer--dark,
+html:not([data-theme='dark']) .footer,
+html:not([data-theme='dark']) .footer--light,
+html:not([data-theme='dark']) .footer--dark {
+  --ifm-footer-background-color: #3b2f20;
+  --ifm-footer-color: #f8f1e6;
+  --ifm-footer-link-color: #d8e8c3;
+  --ifm-footer-title-color: #ffffff;
+
+  background-color: #3b2f20 !important;
+  color: #f8f1e6 !important;
+}
+
+/* Dark theme footer */
+html[data-theme='dark'] .footer,
+html[data-theme='dark'] .footer--light,
+html[data-theme='dark'] .footer--dark {
+  --ifm-footer-background-color: #2a2118;
+  --ifm-footer-color: #f4eadc;
+  --ifm-footer-link-color: #a8c686;
+  --ifm-footer-title-color: #ffffff;
+
+  background-color: #2a2118 !important;
+  color: #f4eadc !important;
+}
+
+/* Footer titles */
+.footer__title {
+  color: var(--ifm-footer-title-color) !important;
+}
+
+/* Footer links */
+.footer a {
+  color: var(--ifm-footer-link-color) !important;
+}
+
+.footer a:hover {
+  color: #a8c686 !important;
+}
+
+/* Footer copyright */
+.footer__copyright {
+  color: var(--ifm-footer-color) !important;
+}
+
+/* Footer separators / small text */
+.footer,
+.footer__item,
+.footer__link-item {
+  color: var(--ifm-footer-color);
+}
+
+/* Secondary button: same for light and dark themes */
+.button--secondary {
+  background-color: #6b4f34;
+  border: 2px solid #6b4f34;
+  color: #ffffff !important;
+  box-shadow: 0 5px 14px rgba(47, 38, 27, 0.24);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.button--secondary:hover {
+  background-color: #5b3d24;
+  border-color: #5b3d24;
+  color: #ffffff !important;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 18px rgba(47, 38, 27, 0.32);
+}
+
+.button--secondary:active {
+  background-color: #4a321f;
+  border-color: #4a321f;
+  color: #ffffff !important;
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(47, 38, 27, 0.22);
+}
+
+.button--secondary:focus,
+.button--secondary:focus-visible {
+  outline: 3px solid rgba(216, 232, 195, 0.75);
+  outline-offset: 2px;
 }
